@@ -1,0 +1,424 @@
+/*
+ * Extremo Ambiente — Event Planner Dashboard
+ * ─────────────────────────────────────────────────────────────────
+ * Palette sourced from extremoambiente.pt:
+ *
+ *  Charcoal (nav/footer bg)    #2C2C2C  ← dark anthracite grey
+ *  Darker charcoal (depths)    #1A1A1A
+ *  Page bg (inner areas)       #242424
+ *  Card surface                #2E2E2E
+ *  Border                      #3D3D3D
+ *  Muted text                  #888888
+ *  Body text                   #F0F0F0
+ *  White (headings / callouts) #FFFFFF
+ *
+ *  Orange (primary accent)     #E86825  ← their CTA buttons
+ *  Orange hover                #F07A3A
+ *  Orange dark                 #C04E10
+ *
+ * Typography:
+ *   Display  — "Montserrat"    (bold all-caps, matches site headers)
+ *   Body     — "Open Sans"     (paragraph text, matches site body)
+ *   Mono     — "JetBrains Mono" (prices / times)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── CSS variables ───────────────────────────────────────────── */
+:root {
+  --orange:       #E86825;
+  --orange-light: #F07A3A;
+  --orange-pale:  #FFB088;
+  --orange-dark:  #C04E10;
+
+  --charcoal:     #2C2C2C;
+  --deep:         #1A1A1A;
+  --surface:      #242424;
+  --card:         #2E2E2E;
+  --raised:       #363636;
+  --border:       #3D3D3D;
+  --border-light: #4A4A4A;
+
+  --muted:        #888888;
+  --text:         #F0F0F0;
+  --white:        #FFFFFF;
+  --off-white:    #E8E8E8;
+
+  --green:        #4CAF50;
+  --amber:        #FFC107;
+  --red:          #E53935;
+  --blue:         #42A5F5;
+}
+
+/* ── Global ──────────────────────────────────────────────────── */
+html, body, [class*="css"] {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+}
+.stApp { background-color: var(--surface); }
+.block-container { padding: 1.5rem 2.5rem 3rem; max-width: 1400px; }
+
+/* ── Header band ─────────────────────────────────────────────── */
+.ea-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1.4rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  background: var(--charcoal);
+  border-bottom: 3px solid var(--orange);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+.ea-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.ea-logo span { color: var(--orange); }
+.ea-tagline {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 300;
+}
+.ea-session-badge {
+  margin-left: auto;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ── Section titles ──────────────────────────────────────────── */
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--orange);
+  margin-bottom: 0.65rem;
+  text-transform: uppercase;
+  border-left: 3px solid var(--orange);
+  padding-left: 0.65rem;
+}
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.ea-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Metric badges ───────────────────────────────────────────── */
+.metric-row { display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+.metric-badge {
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--orange);
+  border-radius: 6px;
+  padding: 0.65rem 1rem;
+  text-align: center;
+  min-width: 110px;
+  flex: 1;
+}
+.metric-badge .val {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+}
+.metric-badge .lbl {
+  font-size: 0.63rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-top: 2px;
+}
+
+/* ── Itinerary table ─────────────────────────────────────────── */
+.itin-table { width:100%; border-collapse: collapse; font-size: 0.86rem; }
+.itin-table thead tr {
+  background: var(--charcoal);
+  border-bottom: 2px solid var(--orange);
+}
+.itin-table thead th {
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  font-size: 0.67rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--off-white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+.itin-table tbody tr { border-bottom: 1px solid var(--border); }
+.itin-table tbody tr:nth-child(odd)  { background: var(--card); }
+.itin-table tbody tr:nth-child(even) { background: var(--raised); }
+.itin-table tbody tr:hover { background: rgba(232,104,37,0.07); }
+.itin-table tbody td { padding: 0.65rem 0.85rem; color: var(--text); vertical-align: middle; }
+
+/* Activity type pills */
+.type-pill {
+  display: inline-block;
+  padding: 0.22rem 0.65rem;
+  border-radius: 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+}
+.type-adventure {
+  background: rgba(232,104,37,0.18);
+  color: var(--orange-pale);
+  border: 1px solid rgba(232,104,37,0.4);
+}
+.type-cultural {
+  background: rgba(66,165,245,0.15);
+  color: #90CAF9;
+  border: 1px solid rgba(66,165,245,0.3);
+}
+.type-food {
+  background: rgba(255,193,7,0.15);
+  color: #FFE082;
+  border: 1px solid rgba(255,193,7,0.3);
+}
+.type-transport {
+  background: rgba(136,136,136,0.2);
+  color: #BDBDBD;
+  border: 1px solid rgba(136,136,136,0.3);
+}
+
+/* ── Chat bubbles ────────────────────────────────────────────── */
+.chat-window {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.bubble-bot {
+  background: var(--card);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 6px 6px 0;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--text);
+  max-width: 88%;
+  align-self: flex-start;
+}
+.bubble-user {
+  background: var(--charcoal);
+  border-right: 3px solid var(--blue);
+  border-radius: 6px 0 0 6px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--text);
+  max-width: 88%;
+  align-self: flex-end;
+}
+
+/* ── Quick option chips ──────────────────────────────────────── */
+.chip-row { display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.5rem; }
+.chip {
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  cursor: default;
+}
+.chip-active {
+  border-color: var(--orange);
+  color: var(--orange-light);
+  background: rgba(232,104,37,0.12);
+}
+
+/* ── Price summary ───────────────────────────────────────────── */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  font-size: 0.84rem;
+  border-bottom: 1px solid var(--border);
+}
+.price-row.total {
+  font-weight: 700;
+  font-size: 1rem;
+  border-bottom: none;
+  padding-top: 0.7rem;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--white);
+}
+.price-val {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--orange-light);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.stButton > button {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  border-radius: 4px;
+  padding: 0.45rem 1.2rem;
+  transition: all 0.15s;
+}
+
+/* ── Phase / progress bar ────────────────────────────────────── */
+.phase-bar { display:flex; gap:2px; border-radius:4px; overflow:hidden; margin-bottom:1rem; }
+.phase-seg {
+  flex: 1;
+  padding: 0.5rem 0.5rem;
+  text-align: center;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--charcoal);
+  color: var(--muted);
+}
+.phase-seg.active {
+  background: var(--orange);
+  color: var(--white);
+}
+.phase-seg.done {
+  background: var(--raised);
+  color: var(--off-white);
+  border-bottom: 2px solid var(--orange-dark);
+}
+
+/* ── Map placeholder ─────────────────────────────────────────── */
+.map-placeholder {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  position: relative;
+  overflow: hidden;
+}
+.map-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 40% 50%, rgba(232,104,37,0.05) 0%, transparent 65%);
+}
+.map-icon { font-size: 2.8rem; opacity: 0.3; }
+
+/* ── Timeline ────────────────────────────────────────────────── */
+.timeline { position: relative; padding-left: 1.8rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--orange), var(--border));
+}
+.tl-item { position: relative; margin-bottom: 1rem; }
+.tl-dot {
+  position: absolute;
+  left: -1.38rem;
+  top: 0.35rem;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px rgba(232,104,37,0.25);
+}
+.tl-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--orange-light);
+}
+.tl-activity { font-weight: 600; font-size: 0.88rem; color: var(--white); }
+.tl-detail { font-size: 0.74rem; color: var(--muted); }
+
+/* ── Info / warning boxes ────────────────────────────────────── */
+.info-box {
+  background: rgba(66,165,245,0.07);
+  border: 1px solid rgba(66,165,245,0.22);
+  border-left: 3px solid var(--blue);
+  border-radius: 4px;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.8rem;
+  color: #90CAF9;
+  margin-bottom: 0.75rem;
+}
+.warn-box {
+  background: rgba(232,104,37,0.08);
+  border: 1px solid rgba(232,104,37,0.25);
+  border-left: 3px solid var(--orange);
+  border-radius: 4px;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.8rem;
+  color: var(--orange-pale);
+  margin-bottom: 0.75rem;
+}
+
+/* ── Streamlit element overrides ─────────────────────────────── */
+div[data-testid="stDataFrame"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+}
+.stSelectbox > div,
+.stTextInput > div,
+.stNumberInput > div {
+  background: var(--charcoal) !important;
+}
+label { font-size: 0.8rem !important; color: var(--muted) !important; }
+div[data-testid="stExpander"] {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+}
+.streamlit-expanderHeader { font-size: 0.84rem; font-weight: 700; }
+div[data-baseweb="tab-list"] { border-bottom: 2px solid var(--border); }
+button[data-baseweb="tab"] {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+div[data-testid="stMarkdownContainer"] p { font-size: 0.85rem; }
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+  background: var(--charcoal) !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }

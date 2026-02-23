@@ -1,0 +1,16 @@
+[project]
+name = "extremoambiente-a1"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "dotenv>=0.9.9",
+    "folium>=0.20.0",
+    "googlemaps>=4.10.0",
+    "openai>=2.21.0",
+    "streamlit>=1.54.0",
+    "streamlit-aggrid>=1.2.1.post2",
+    "streamlit-folium>=0.26.1",
+    "streamlit-searchbox>=0.1.24",
+]
