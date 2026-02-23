@@ -87,3 +87,79 @@ def _normalize(parsed: dict) -> dict:
         "special_requests": parsed.get("special_requests") or "",
         "session_id": session_id,
     }
+
+
+def _fallback_parse(email_text: str) -> dict:
+    """Simple keyword-based fallback when no API key is available."""
+    text = email_text.lower()
+
+    # Try to extract group size
+    group_size = 10
+    for word in text.split():
+        if word.isdigit() and 2 <= int(word) <= 500:
+            group_size = int(word)
+            break
+
+    # Detect preferences
+    prefs = []
+    if any(kw in text for kw in ["adventure", "outdoor", "jeep", "kayak", "surf", "team building"]):
+        prefs.append("adventure")
+    if any(kw in text for kw in ["culture", "cultural", "museum", "palace", "history", "wine"]):
+        prefs.append("cultural")
+    if any(kw in text for kw in ["food", "lunch", "dinner", "restaurant", "cuisine", "tasting"]):
+        prefs.append("food")
+    if not prefs:
+        prefs = ["adventure", "cultural"]
+
+    # Detect location
+    locations = ["Porto"]
+    if "sintra" in text:
+        locations = ["Sintra"]
+    elif "algarve" in text:
+        locations = ["Algarve"]
+
+    return _normalize({
+        "client_name": "Parsed Client",
+        "group_size": group_size,
+        "locations": locations,
+        "preferences": prefs,
+        "special_requests": email_text[:200] if len(email_text) > 200 else email_text,
+    })
+
+
+# Sample email for demo/testing purposes
+SAMPLE_EMAIL = """\
+From: Sarah Mitchell <sarah.mitchell@innovatech.co.uk>
+To: events@extremoambiente.pt
+Subject: Corporate Team Building Event - 20 people - Porto
+
+Hi Extremo Ambiente team,
+
+We're planning a corporate team building event for our London office.
+Here are the details:
+
+- Company: InnovaTech Solutions
+- Group size: 20 people
+- Preferred date: April 15, 2026
+- Location: Porto area
+- Duration: Full day (approximately 8 hours)
+- Budget: around 180 per person
+
+We're interested in a mix of adventure activities and cultural experiences.
+Some team members are quite adventurous but others prefer something calmer.
+We'd love to include a traditional Portuguese lunch.
+
+Special requests:
+- 2 vegetarians in the group
+- One person uses a wheelchair
+- We'd like a group photo session
+
+Looking forward to your proposal!
+
+Best regards,
+Sarah Mitchell
+Head of People & Culture
+InnovaTech Solutions
+sarah.mitchell@innovatech.co.uk
++44 20 7946 0958
+"""

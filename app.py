@@ -17,6 +17,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# ── Streamlit Cloud secrets → env vars bridge ────────────────────────────────
+# On Streamlit Community Cloud, secrets are in st.secrets, not .env.
+# Copy them into os.environ so all modules that use os.getenv() still work.
+try:
+    for key, value in st.secrets.items():
+        if isinstance(value, str):
+            os.environ.setdefault(key, value)
+except FileNotFoundError:
+    pass  # No secrets file (local dev uses .env instead)
+
 # ── Page config (must be first Streamlit call) ───────────────────────────────
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _FAVICON = os.path.join(_HERE, "assets", "favicon.png")
@@ -65,7 +75,7 @@ from components.chat_panel import render_chat_panel
 from components.pricing_panel import render_pricing_panel
 from components.activities_editor import render_activities_editor
 from data.engine import compute_totals, format_date_display, get_itinerary_for_client, parse_date_input
-from ai.email_parser import parse_email
+from ai.email_parser import parse_email, SAMPLE_EMAIL
 
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
