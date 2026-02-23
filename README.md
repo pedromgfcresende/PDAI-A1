@@ -12,17 +12,15 @@ An AI-powered corporate event quoting system for [Extremo Ambiente](https://extr
 - [Environment Variables](#environment-variables)
 - [Running the Application](#running-the-application)
 - [How to Use the Dashboard](#how-to-use-the-dashboard)
-  - [Tab 1 — Email Parser](#tab-1--email-parser)
-  - [Tab 2 — Planner](#tab-2--planner)
-  - [Tab 3 — Pricing](#tab-3--pricing)
-  - [Tab 4 — Finalize](#tab-4--finalize)
+  - [Tab 1 - Email Parser](#tab-1--email-parser)
+  - [Tab 2 - Planner](#tab-2--planner)
+  - [Tab 3 - Pricing](#tab-3--pricing)
+  - [Tab 4 - Finalize](#tab-4--finalize)
 - [AI Features](#ai-features)
 - [Google Maps Integration](#google-maps-integration)
 - [Proposal System](#proposal-system)
 - [Activity Catalog](#activity-catalog)
-- [Business Rules](#business-rules)
 - [Project Structure](#project-structure)
-- [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -86,18 +84,18 @@ OPENAI_API_KEY=sk-your-key-here
 GOOGLE_MAPS_API_KEY=your-google-maps-api-key-here
 ```
 
-| Variable | Required | What It Enables |
-|---|---|---|
-| `OPENAI_API_KEY` | No | **AI Email Parsing**: GPT-4o extracts structured data from client emails. **AI Chat Assistant**: context-aware responses based on the current itinerary and budget. Without it, both features fall back to keyword-based matching. |
-| `GOOGLE_MAPS_API_KEY` | No | **Places Autocomplete**: search and assign Google Maps locations to itinerary stops. **Geocoding**: plot custom locations on the map. **Route Polylines**: draw real road routes between stops (via Routes API). **Travel Duration**: estimate travel time between consecutive stops (via Routes API). Without it, the map uses only catalog coordinates and travel times default to 15 minutes. |
+| Variable | What It Enables |
+|---|---|
+| `OPENAI_API_KEY` | **AI Email Parsing**: GPT-4o extracts structured data from client emails. **AI Chat Assistant**: context-aware responses based on the current itinerary and budget. |
+| `GOOGLE_MAPS_API_KEY` | **Places Autocomplete**: search and assign Google Maps locations to itinerary stops. **Geocoding**: plot custom locations on the map. **Route Polylines**: draw real road routes between stops (via Routes API). **Travel Duration**: estimate travel time between consecutive stops (via Routes API). |
 
 ### Google Maps API — Required APIs
 
 If you use a Google Maps API key, make sure the following APIs are enabled in your Google Cloud Console project:
 
-1. **Places API (New)** — for autocomplete search and text search geocoding
+1. **Places API** — for autocomplete search and text search geocoding
 2. **Routes API** — for travel duration estimation and route polylines
-3. **Maps JavaScript API** — for Google Maps tile rendering on the map (optional; falls back to OpenStreetMap)
+3. **Maps JavaScript API** — for Google Maps tile rendering on the map
 
 ---
 
@@ -113,8 +111,8 @@ The dashboard opens at **http://localhost:8501**.
 
 When the app loads, the sidebar shows the status of external integrations:
 
-- **AI Status**: "GPT-4o Active" (green) when `OPENAI_API_KEY` is set, "Fallback Mode" (amber) otherwise
-- **Maps**: "Google Maps Active" (green) when `GOOGLE_MAPS_API_KEY` is set, "Catalog-only Mode" (amber) otherwise
+- **AI Status**: "GPT-4o Active" (green) when `OPENAI_API_KEY` is set
+- **Maps**: "Google Maps Active" (green) when `GOOGLE_MAPS_API_KEY` is set
 
 ---
 
@@ -129,9 +127,8 @@ This is the entry point. It uses GPT-4o (or keyword fallback) to extract structu
 **Steps:**
 
 1. **Paste a client email** into the text area on the left. The email should contain event details like company name, group size, date, location, budget, and preferences.
-2. Click **"Load Sample Email"** to try a pre-loaded example email (InnovaTech Solutions, 20 people, Porto, April 15 2026).
-3. Click **"Parse with AI"** to extract the data. GPT-4o analyzes the email and populates the form fields on the right.
-4. **Review and edit** the extracted data in the form fields:
+2. Click **"Parse with AI"** to extract the data. GPT-4o analyzes the email and populates the form fields on the right.
+3. **Review and edit** the extracted data in the form fields:
    - **Client Name** — company or person name
    - **Email** — client email address
    - **Group Size** — number of attendees
@@ -141,9 +138,7 @@ This is the entry point. It uses GPT-4o (or keyword fallback) to extract structu
    - **Budget per Person** — set to 0 for no budget cap
    - **Preferences** — comma-separated: adventure, cultural, food
    - **Special Requests** — free text for accessibility needs, dietary requirements, etc.
-5. Click **"Start Planning"** to create a session and move to the Planner tab.
-
-**Without an API key**: The parser uses keyword matching to extract basic information (group size, location, preferences) from the email text.
+4. Click **"Start Planning"** to create a session and move to the Planner tab.
 
 ---
 
@@ -154,7 +149,7 @@ The main workspace for building the event itinerary and selecting activities. Th
 #### Proposal Selector
 
 At the top, a dropdown lets you switch between proposals (A, B, C...). Next to it:
-- A text field to **rename** the current proposal (e.g., "Adventure Mix", "Cultural Focus")
+- A text field to **rename** the current proposal
 - A **"+ New Proposal"** button to create additional proposal versions
 
 Each proposal is fully independent with its own itinerary, activities, pricing, tour type, and start time.
@@ -173,7 +168,7 @@ The itinerary is a table of route stops (waypoints) that appear on the map. Thes
 | Activity | Yes | Name of the activity/stop |
 | Google Maps Location | No | Set via the location editor below the table |
 | Duration (min) | Yes | How long the group spends at this stop |
-| Travel (min) | No | Travel time to the next stop (auto-calculated or 15 min default) |
+| Travel (min) | No | Travel time to the next stop calculated through Google Maps API |
 | Notes | Yes | Free-text notes |
 | X | Yes | Check to delete the row |
 
@@ -199,7 +194,7 @@ Below the itinerary, the Activities & Billing section manages billable services 
 
 Catalog items have **auto-calculated pricing** (greyed out, locked). The system automatically computes the number of vehicles/blocks needed based on group size and event duration.
 
-**Custom activities**: Click **"+ Add Activity"** to add manual items (e.g., Photography, Wine Tasting). Set a unit price and the quantity is automatically set to the group size. The total is calculated as unit price times quantity.
+**Custom activities**: Click **"+ Add Activity"** to add manual items. Set a unit price and the quantity is automatically set to the group size. The total is calculated as unit price times quantity.
 
 **Table columns:**
 | Column | Editable | Description |
@@ -223,7 +218,9 @@ Displays all itinerary stops on an interactive Folium map:
 - **Auto-updates**: the map re-renders whenever the itinerary changes
 - **Map tiles**: Google Maps tiles when API key is set, OpenStreetMap otherwise
 
-#### AI Chat Assistant
+#### AI Chat Assistant (still in testing)
+
+`Note: Currently the agent is read-only -> not capable to modify anything`
 
 A context-aware chatbot at the bottom-right of the Planner tab. The AI sees:
 - Client information (name, group size, location, budget)
@@ -270,17 +267,15 @@ Click **"Generate PDF Proposal"** to create a branded PDF (placeholder in the pr
 
 ### Email Parser (GPT-4o)
 
-- **Model**: GPT-4o with temperature 0.1 for deterministic extraction
+- **Model**: GPT-4o
 - **System prompt**: instructs the model to return valid JSON with specific fields
-- **Fallback**: keyword-based matching extracts group size, location, and preferences from the email text
-- **Normalization**: missing fields get sensible defaults (location: Porto, duration: 6h, budget: null)
+- **Normalization**: missing fields get sensible defaults (location: Sintra, duration: 6h, budget: null)
 
 ### Chat Assistant (GPT-4o)
 
-- **Model**: GPT-4o with temperature 0.7 for more creative responses
+- **Model**: GPT-4o
 - **Context injection**: the system prompt includes a JSON dump of the current event context (client, itinerary, activities, budget)
 - **Max tokens**: 200 per response to keep answers concise
-- **Fallback**: keyword-to-response map covering common topics (lunch, wine, transport, budget, etc.)
 
 ---
 
@@ -288,13 +283,13 @@ Click **"Generate PDF Proposal"** to create a branded PDF (placeholder in the pr
 
 The app uses three Google APIs (all via the same API key):
 
-| Feature | API Used | Fallback Without Key |
-|---|---|---|
-| Location search in itinerary editor | Places API (New) — autocomplete + searchText | Search disabled |
-| Travel time between stops | Routes API — computeRoutes | 15-minute default |
-| Route drawing on map | Routes API — computeRoutes (polyline) | Dashed straight lines |
-| Map tiles | Google Maps tile URL | OpenStreetMap tiles |
-| Coordinate resolution | Places API — searchText | No coordinates, marker not shown |
+| Feature | API Used |
+|---|---|
+| Location search in itinerary editor | Places API (New) — autocomplete + searchText |
+| Travel time between stops | Routes API — computeRoutes |
+| Route drawing on map | Routes API — computeRoutes (polyline) |
+| Map tiles | Google Maps tile URL |
+| Coordinate resolution | Places API — searchText |
 
 All API responses are cached for 1 hour via `@st.cache_data(ttl=3600)`.
 
@@ -333,19 +328,6 @@ Custom activities added via "+ Add Activity" have editable unit prices and quant
 
 ---
 
-## Business Rules
-
-| Rule | Detail |
-|---|---|
-| Group discount | Groups > 10 people receive 5% off the total automatically |
-| Budget tracking | Per-person cost compared against the client's budget (if provided); over-budget shows a warning banner |
-| Tour type | Selecting Jeeps or RZR sets driving mode; Walking sets walking mode — affects travel time calculations |
-| Travel time default | 15 minutes between stops when Google Routes API is unavailable |
-| Event start time | Configurable per proposal in 15-minute increments, default 09:30 |
-| Date format | Stored as YYYY-MM-DD internally, displayed as dd/mm/yyyy in the UI |
-
----
-
 ## Project Structure
 
 ```
@@ -379,27 +361,10 @@ ExtremoAmbiente-A1/
 │
 ├── data/
 │   ├── engine.py                   # Pricing calculations, time rebuilding, cost aggregation
-│   └── catalog.py                  # Activity catalog, demo clients, add-ons, pickup locations
+│   └── catalog.py                  # Activity catalog
 │
 └── services/
     └── geocoding.py                # Google Maps geocoding, Places, Routes API integration
 ```
 
 ---
-
-## Troubleshooting
-
-| Issue | Solution |
-|---|---|
-| `ModuleNotFoundError` on import | Run `uv sync` to install all dependencies |
-| "Parse with AI" does nothing | Set `OPENAI_API_KEY` in `.env`; without it the fallback parser runs (less accurate) |
-| Map shows no markers | Assign Google Maps locations to itinerary stops via the location editor; locations without coordinates are skipped |
-| Map shows dashed lines instead of roads | Enable the **Routes API** in your Google Cloud project |
-| Map shows OpenStreetMap instead of Google Maps | Enable the **Maps JavaScript API** and check `GOOGLE_MAPS_API_KEY` is set |
-| Location search returns no results | Enable the **Places API (New)** in your Google Cloud project; ensure the API key has no IP restrictions blocking localhost |
-| Travel times all show 15 min | Enable the **Routes API** and assign coordinates to at least two consecutive stops |
-| "Fallback Mode" in sidebar | `OPENAI_API_KEY` is not set; AI features use keyword matching instead of GPT-4o |
-| "Catalog-only Mode" in sidebar | `GOOGLE_MAPS_API_KEY` is not set; map and location features are limited |
-| Planner/Pricing/Finalize tabs show "No Active Session" | Parse an email and click "Start Planning" in the Email Parser tab first |
-| AgGrid not rendering | Ensure `streamlit-aggrid>=1.2.1` is installed; run `uv sync` |
-| Port 8501 already in use | Stop the other Streamlit instance or run with `uv run streamlit run app.py --server.port 8502` |
