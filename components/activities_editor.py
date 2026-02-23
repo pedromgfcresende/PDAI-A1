@@ -90,7 +90,7 @@ def render_activities_editor(
                         cellEditorParams={"values": ["adventure", "cultural", "food", "transport", "service"]})
 
     # Unit Price: editable only for non-auto_calc rows
-    # We use a JS expression to conditionally disable editing
+    # use a JS expression to conditionally disable editing
     price_editable_js = JsCode("function(params) { return !params.data._auto_calc; }")
     gb.configure_column("Unit Price (\u20ac)", width=_COL_W["Unit Price (\u20ac)"],
                         editable=True, singleClickEdit=True, type=["numericColumn"],
@@ -115,16 +115,16 @@ def render_activities_editor(
                         resizable=False, suppressHeaderMenuButton=True, lockPosition="right",
                         suppressSizeToFit=True)
 
-    # Hidden column for auto_calc flag (used by JS expressions)
+    # Hidden column for auto_calc flag - used by JS expressions
     gb.configure_column("_auto_calc", hide=True)
 
     gb.configure_grid_options(animateRows=True, suppressRowClickSelection=True)
 
-    # ── Add hidden _auto_calc column to dataframe ──────────────────
+    # Add hidden _auto_calc column to dataframe 
     auto_calc_flags = [act.get("auto_calc", False) for act in activities]
     df["_auto_calc"] = auto_calc_flags
 
-    # ── Render grid ────────────────────────────────────────────────
+    # Render grid 
     grid_resp = AgGrid(
         df,
         gridOptions=gb.build(),
@@ -144,7 +144,7 @@ def render_activities_editor(
         },
     )
 
-    # ── Process grid response ──────────────────────────────────────
+    # Process grid response 
     result = grid_resp.get("data")
     if result is not None and isinstance(result, pd.DataFrame) and not result.empty:
         del_mask = result["Delete"].astype(bool)
@@ -158,7 +158,7 @@ def render_activities_editor(
             st.session_state.proposals = proposals
             st.rerun()
 
-    # ── Add Activity button ────────────────────────────────────────
+    # Add Activity button 
     _render_add_activity(activities, active_prop, proposals, group_size)
 
     return activities, tour_type

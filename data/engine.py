@@ -2,7 +2,6 @@
 
 Business rules enforced here:
 - Group discount: >10 people → 5% off total
-- Photography surcharge: +€200 flat (handled via ADD_ONS catalog)
 - Per-person vs flat activity pricing
 - Tour type transport cost: Walking (€10/person/h) or Jeeps (€400/jeep/4h, 6 ppl/jeep)
 """

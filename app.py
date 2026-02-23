@@ -65,7 +65,7 @@ from components.chat_panel import render_chat_panel
 from components.pricing_panel import render_pricing_panel
 from components.activities_editor import render_activities_editor
 from data.engine import compute_totals, format_date_display, get_itinerary_for_client, parse_date_input
-from ai.email_parser import parse_email, SAMPLE_EMAIL
+from ai.email_parser import parse_email
 
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:

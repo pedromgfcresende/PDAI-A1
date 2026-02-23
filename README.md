@@ -356,8 +356,8 @@ ExtremoAmbiente-A1/
 │   └── pricing_panel.py            # Cost breakdown with manual overrides
 │
 ├── ai/
-│   ├── email_parser.py             # GPT-4o email extraction + keyword fallback
-│   └── chat_agent.py               # Context-aware chatbot + keyword fallback
+│   ├── email_parser.py             # GPT-4o email extraction
+│   └── chat_agent.py               # Context-aware chatbot
 │
 ├── data/
 │   ├── engine.py                   # Pricing calculations, time rebuilding, cost aggregation
