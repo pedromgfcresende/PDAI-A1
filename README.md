@@ -366,7 +366,6 @@ ExtremoAmbiente-A1/
 ├── components/                     # Reusable Streamlit UI components
 │   ├── header.py                   # Top header band with logo + session badge
 │   ├── metrics_bar.py              # KPI metrics strip (client, cost, budget)
-│   ├── phase_bar.py                # Workflow phase progress indicator
 │   ├── proposal_selector.py        # A/B/C proposal dropdown + rename + create
 │   ├── itinerary_editor.py         # AgGrid drag-drop route table + start time picker
 │   ├── activities_editor.py        # AgGrid billing table + catalog selector

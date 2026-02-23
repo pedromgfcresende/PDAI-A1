@@ -16,7 +16,7 @@ from streamlit_searchbox import st_searchbox
 from data.engine import rebuild_times
 from services.geocoding import get_place_coordinates, search_places
 
-# ── Column widths ──────────────────────────────────────────────────────
+# Column widths
 _COL_W = {
     "#": 50,
     "Time": 65,
@@ -60,7 +60,7 @@ def render_itinerary_editor(
 
     travel_mode = "WALK" if tour_type == "walking" else "DRIVE"
 
-    # ── Event start time picker (per-proposal) ───────────────────────────
+    # Event start time picker (per-proposal)
     current_proposal = proposals[active_prop]
     stored_start = current_proposal.get("start_time", "09:30")
     h, m = (int(x) for x in stored_start.split(":"))
@@ -89,7 +89,7 @@ def render_itinerary_editor(
         _render_action_buttons(itin, active_prop, proposals, location, coords_map, travel_mode, start_time)
         return itin
 
-    # ── Build DataFrame ──────────────────────────────────────────────────
+    # Build DataFrame
     rows = []
     for idx, item in enumerate(itin):
         rows.append(
@@ -106,7 +106,7 @@ def render_itinerary_editor(
         )
     df = pd.DataFrame(rows)
 
-    # ── AgGrid options ─────────────────────────────────────────────────
+    # AgGrid options
     gb = GridOptionsBuilder.from_dataframe(df)
 
     gb.configure_column(
@@ -177,7 +177,7 @@ def render_itinerary_editor(
         rowDragEntireRow=True,
     )
 
-    # ── Render grid ────────────────────────────────────────────────────
+    # Render grid
     grid_resp = AgGrid(
         df,
         gridOptions=gb.build(),
@@ -196,7 +196,7 @@ def render_itinerary_editor(
         },
     )
 
-    # ── Process grid response (value edits + deletions + reorder) ──────
+    # Process grid response (value edits + deletions + reorder)
     result = grid_resp.get("data")
     if result is not None and isinstance(result, pd.DataFrame) and not result.empty:
         del_mask = result["Delete"].astype(bool)
@@ -213,17 +213,17 @@ def render_itinerary_editor(
             st.session_state.proposals = proposals
             st.rerun()
 
-    # ── Update Location (Google Places autocomplete) ──────────────────
+    # Update Location (Google Places autocomplete)
     if itin:
         _render_location_editor(itin, active_prop, proposals)
 
-    # ── Action buttons ─────────────────────────────────────────────────
+    # Action buttons
     _render_action_buttons(itin, active_prop, proposals, location, coords_map, travel_mode, start_time)
 
     return itin
 
 
-# ── Helpers ────────────────────────────────────────────────────────────────
+# Helpers
 
 
 def _resolve_and_store_coords(
@@ -344,7 +344,7 @@ def _render_action_buttons(
         if st.button("+ Add Stop", use_container_width=True, key="btn_add_activity"):
             st.session_state.show_add_form = True
 
-    # ── Add Stop form ──────────────────────────────────────────────
+    # Add Stop form
     if st.session_state.get("show_add_form"):
         st.markdown("**Add Route Stop**")
 
