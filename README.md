@@ -1,4 +1,4 @@
-# Extremo Ambiente — Event Automation Dashboard
+# Extremo Ambiente - Event Automation Dashboard
 
 An AI-powered corporate event quoting system for [Extremo Ambiente](https://extremoambiente.pt), a Portugal-based adventure tourism company. The dashboard transforms a manual quoting process into an intelligent workflow: client emails go in, structured itineraries and branded proposals come out.
 
@@ -26,14 +26,14 @@ An AI-powered corporate event quoting system for [Extremo Ambiente](https://extr
 
 ## Features Overview
 
-- **AI Email Parsing** — Paste a client email and GPT-4o extracts structured event data (client name, group size, date, location, budget, preferences, special requests). Falls back to keyword matching when no API key is set.
-- **Multi-Proposal System** — Create multiple proposal versions (A, B, C...) per client event, each with independent itinerary, activities, pricing, and start time.
-- **Itinerary Editor** — Drag-and-drop AgGrid table for route stops with automatic time recalculation, configurable event start time (15-minute increments), Google Places location search, and per-stop travel duration estimation.
-- **Activities & Billing** — Separate billing table with catalog-based transport options (Jeeps, Walking, RZR) featuring auto-calculated pricing, plus manual custom activities.
-- **Interactive Route Map** — Folium map with color-coded markers by activity type, real road route polylines via Google Routes API, and automatic re-rendering on itinerary changes.
-- **AI Chat Assistant** — Context-aware chatbot that sees the full itinerary, budget, and client preferences. Powered by GPT-4o with keyword fallback.
-- **Pricing Panel** — Full cost breakdown with manual price overrides per activity, automatic group discounts, and per-person calculations.
-- **Metrics Bar** — Live KPI strip showing client name, date, group size, location, per-person cost, total cost, and budget status.
+- **AI Email Parsing** - Paste a client email and GPT-4o extracts structured event data (client name, group size, date, location, budget, preferences, special requests). Falls back to keyword matching when no API key is set.
+- **Multi-Proposal System** - Create multiple proposal versions (A, B, C...) per client event, each with independent itinerary, activities, pricing, and start time.
+- **Itinerary Editor** - Drag-and-drop AgGrid table for route stops with automatic time recalculation, configurable event start time (15-minute increments), Google Places location search, and per-stop travel duration estimation.
+- **Activities & Billing** - Separate billing table with catalog-based transport options (Jeeps, Walking, RZR) featuring auto-calculated pricing, plus manual custom activities.
+- **Interactive Route Map** - Folium map with color-coded markers by activity type, real road route polylines via Google Routes API, and automatic re-rendering on itinerary changes.
+- **AI Chat Assistant** - Context-aware chatbot that sees the full itinerary, budget, and client preferences. Powered by GPT-4o with keyword fallback.
+- **Pricing Panel** - Full cost breakdown with manual price overrides per activity, automatic group discounts, and per-person calculations.
+- **Metrics Bar** - Live KPI strip showing client name, date, group size, location, per-person cost, total cost, and budget status.
 
 ---
 
@@ -89,13 +89,13 @@ GOOGLE_MAPS_API_KEY=your-google-maps-api-key-here
 | `OPENAI_API_KEY` | **AI Email Parsing**: GPT-4o extracts structured data from client emails. **AI Chat Assistant**: context-aware responses based on the current itinerary and budget. |
 | `GOOGLE_MAPS_API_KEY` | **Places Autocomplete**: search and assign Google Maps locations to itinerary stops. **Geocoding**: plot custom locations on the map. **Route Polylines**: draw real road routes between stops (via Routes API). **Travel Duration**: estimate travel time between consecutive stops (via Routes API). |
 
-### Google Maps API — Required APIs
+### Google Maps API - Required APIs
 
 If you use a Google Maps API key, make sure the following APIs are enabled in your Google Cloud Console project:
 
-1. **Places API** — for autocomplete search and text search geocoding
-2. **Routes API** — for travel duration estimation and route polylines
-3. **Maps JavaScript API** — for Google Maps tile rendering on the map
+1. **Places API** - for autocomplete search and text search geocoding
+2. **Routes API** - for travel duration estimation and route polylines
+3. **Maps JavaScript API** - for Google Maps tile rendering on the map
 
 ---
 
@@ -120,7 +120,7 @@ When the app loads, the sidebar shows the status of external integrations:
 
 The dashboard has four tabs that represent the workflow stages: **Email Parser**, **Planner**, **Pricing**, and **Finalize**. You must start with the Email Parser to load a client before the other tabs become available.
 
-### Tab 1 — Email Parser
+### Tab 1 - Email Parser
 
 This is the entry point. It uses GPT-4o (or keyword fallback) to extract structured event data from a client email.
 
@@ -129,20 +129,20 @@ This is the entry point. It uses GPT-4o (or keyword fallback) to extract structu
 1. **Paste a client email** into the text area on the left. The email should contain event details like company name, group size, date, location, budget, and preferences.
 2. Click **"Parse with AI"** to extract the data. GPT-4o analyzes the email and populates the form fields on the right.
 3. **Review and edit** the extracted data in the form fields:
-   - **Client Name** — company or person name
-   - **Email** — client email address
-   - **Group Size** — number of attendees
-   - **Date** — event date in dd/mm/yyyy format
-   - **Location** — primary location (e.g., Porto, Sintra, Algarve)
-   - **Duration (hours)** — total event duration
-   - **Budget per Person** — set to 0 for no budget cap
-   - **Preferences** — comma-separated: adventure, cultural, food
-   - **Special Requests** — free text for accessibility needs, dietary requirements, etc.
+   - **Client Name** - company or person name
+   - **Email** - client email address
+   - **Group Size** - number of attendees
+   - **Date** - event date in dd/mm/yyyy format
+   - **Location** - primary location (e.g., Sintra, Algarve)
+   - **Duration (hours)** - total event duration
+   - **Budget per Person** - set to 0 for no budget cap
+   - **Preferences** - comma-separated: adventure, cultural, food
+   - **Special Requests** - free text for accessibility needs, dietary requirements, etc.
 4. Click **"Start Planning"** to create a session and move to the Planner tab.
 
 ---
 
-### Tab 2 — Planner
+### Tab 2 - Planner
 
 The main workspace for building the event itinerary and selecting activities. This tab has several sections from top to bottom:
 
@@ -185,12 +185,12 @@ The itinerary is a table of route stops (waypoints) that appear on the map. Thes
 
 #### Activities & Billing
 
-Below the itinerary, the Activities & Billing section manages billable services — these are separate from route stops.
+Below the itinerary, the Activities & Billing section manages billable services - these are separate from route stops.
 
 **Catalog selector**: Three buttons at the top let you add pre-configured transport options:
-- **Jeeps** — EUR 400 per jeep per 4-hour block, 6 people per jeep
-- **Walking** — EUR 10 per person per hour
-- **RZR** — EUR 200 per car per 2-hour block, 2 people per car
+- **Jeeps** - EUR 400 per jeep per 4-hour block, 6 people per jeep
+- **Walking** - EUR 10 per person per hour
+- **RZR** - EUR 200 per car per 2-hour block, 2 people per car
 
 Catalog items have **auto-calculated pricing** (greyed out, locked). The system automatically computes the number of vehicles/blocks needed based on group size and event duration.
 
@@ -238,7 +238,7 @@ Ask it questions like:
 
 ---
 
-### Tab 3 — Pricing
+### Tab 3 - Pricing
 
 A read-only cost breakdown for the active proposal. Shows:
 
@@ -253,13 +253,13 @@ Manual price overrides persist per proposal and are reflected in the metrics bar
 
 ---
 
-### Tab 4 — Finalize
+### Tab 4 - Finalize
 
 A summary card showing:
 - Client name, event date, group size, location
 - Final cost and per-person cost
 
-Click **"Generate PDF Proposal"** to create a branded PDF (placeholder in the prototype — the production version uses ReportLab via AWS Lambda).
+Click **"Generate PDF Proposal"** to create a branded PDF (placeholder in the prototype - the production version uses ReportLab via AWS Lambda).
 
 ---
 
@@ -285,11 +285,11 @@ The app uses three Google APIs (all via the same API key):
 
 | Feature | API Used |
 |---|---|
-| Location search in itinerary editor | Places API (New) — autocomplete + searchText |
-| Travel time between stops | Routes API — computeRoutes |
-| Route drawing on map | Routes API — computeRoutes (polyline) |
+| Location search in itinerary editor | Places API (New) - autocomplete + searchText |
+| Travel time between stops | Routes API - computeRoutes |
+| Route drawing on map | Routes API - computeRoutes (polyline) |
 | Map tiles | Google Maps tile URL |
-| Coordinate resolution | Places API — searchText |
+| Coordinate resolution | Places API - searchText |
 
 All API responses are cached for 1 hour via `@st.cache_data(ttl=3600)`.
 
@@ -332,7 +332,7 @@ Custom activities added via "+ Add Activity" have editable unit prices and quant
 
 ```
 ExtremoAmbiente-A1/
-├── app.py                          # Streamlit entry point — routing, layout, tabs
+├── app.py                          # Streamlit entry point - routing, layout, tabs
 ├── style.css                       # Global CSS design system (brand palette)
 ├── pyproject.toml                  # uv dependency definitions
 ├── uv.lock                         # uv lockfile (committed)
